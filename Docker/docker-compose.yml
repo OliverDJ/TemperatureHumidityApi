@@ -1,0 +1,13 @@
+
+
+version: '2'
+services:
+  sqlserver:
+    build: 
+      context: "./mssql/build"
+    container_name: "temphumid_mssql"
+    hostname: 'sqlserver'
+    env_file:
+      - ./mssql/mssql.env
+    ports:
+      - '1433:1433'
