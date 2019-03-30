@@ -15,7 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="Models.fs" />
+    <Compile Include="Moppers\DeviceMopper.fs" />
+    <Compile Include="Moppers\TemperatureHumidityMopper.fs" />
+    <Compile Include="HttpHandlers\TemperatureHumidityHandler.fs" />
+    <Compile Include="HttpHandlers\DeviceHandler.fs" />
     <Compile Include="HttpHandlers.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

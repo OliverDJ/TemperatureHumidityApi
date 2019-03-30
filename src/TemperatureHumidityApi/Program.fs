@@ -7,7 +7,7 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
-open TemperatureHumidityApi.HttpHandlers
+open TemperatureHumidityApi.DeviceHandler
 
 // ---------------------------------
 // Web app
@@ -18,7 +18,8 @@ let webApp =
         subRoute "/api"
             (choose [
                 GET >=> choose [
-                    route "/hello" >=> handleGetHello
+                    route "/devices" >=> getAllDevices
+                    //routef "/getTempHumidByDeviceId/%i" getTempHumidById
                 ]
             ])
         setStatusCode 404 >=> text "Not Found" ]
