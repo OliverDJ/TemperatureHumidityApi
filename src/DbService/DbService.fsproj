@@ -5,6 +5,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Context.fs" />
+    <Compile Include="Moppers\TemperatureHumidityMopper.fs" />
     <Compile Include="Moppers\DeviceMopper.fs" />
     <Compile Include="ServiceAccess\TemperatureHumidityServiceHandler.fs" />
     <Compile Include="ServiceAccess\DeviceServiceHandler.fs" />

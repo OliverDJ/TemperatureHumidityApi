@@ -116,13 +116,14 @@ CREATE TABLE [dbo].[TemperaturesHumidities](
 	[Temperature] [decimal](18, 0) NOT NULL,
 	[Humidity] [decimal](18, 0) NOT NULL,
 	[Timestamp] [datetime] NOT NULL,
-	[DeviceId] [int] NOT NULL,
-	[Location] [geography] NULL,
+	[Longitude] [decimal](18, 0) NOT NULL,
+	[Latitude] [decimal](18, 0) NOT NULL,
+	[DeviceId] [int] NOT NULL
  CONSTRAINT [PK_TemperaturesHumidities] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[TemperaturesHumidities]  WITH CHECK ADD  CONSTRAINT [FK_TemperaturesHumidities_Devices] FOREIGN KEY([DeviceId])
 REFERENCES [dbo].[Devices] ([Id])

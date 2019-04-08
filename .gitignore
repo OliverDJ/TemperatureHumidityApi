@@ -6,3 +6,4 @@ obj/
 .fake/
 .packages/
 paket-files/
+packages/

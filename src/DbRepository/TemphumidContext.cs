@@ -44,6 +44,10 @@ namespace DbRepository
             {
                 entity.Property(e => e.Humidity).HasColumnType("decimal(18, 0)");
 
+                entity.Property(e => e.Latitude).HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Longitude).HasColumnType("decimal(18, 0)");
+
                 entity.Property(e => e.Temperature).HasColumnType("decimal(18, 0)");
 
                 entity.Property(e => e.Timestamp).HasColumnType("datetime");
