@@ -1,9 +1,10 @@
-﻿namespace TemperatureHumidityApi.Moppers
+﻿
+namespace DbService
+open System.Data.Spatial
 
-open System
+    module TemperatureHumidityMopper =
 
-    module TemperatureHumidityMopper = 
-        
+
         type ExistingTemperatureHumidity = 
             {   
                 Id: int
@@ -21,11 +22,6 @@ open System
                 Humidity: double
                 Timestamp: DateTime
                 DeviceId: int
-                Latitude: double
-                Longitude: double
+                geography: 
             }
-
-
-
-
 

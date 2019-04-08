@@ -2,3 +2,7 @@ bin/
 obj/
 .vs/
 .fsproj.user
+
+.fake/
+.packages/
+paket-files/

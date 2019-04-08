@@ -8,6 +8,7 @@ open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
 open TemperatureHumidityApi.DeviceHandler
+open TemperatureHumidityApi.Moppers.DeviceMopper
 
 // ---------------------------------
 // Web app
@@ -19,7 +20,10 @@ let webApp =
             (choose [
                 GET >=> choose [
                     route "/devices" >=> getAllDevices
-                    //routef "/getTempHumidByDeviceId/%i" getTempHumidById
+                    routef "/deviceById/%i" getDeviceById 
+                ]
+                POST >=> choose [
+                    route "/addDevice" >=> bindJson<NewDevice> addNewDevice
                 ]
             ])
         setStatusCode 404 >=> text "Not Found" ]
