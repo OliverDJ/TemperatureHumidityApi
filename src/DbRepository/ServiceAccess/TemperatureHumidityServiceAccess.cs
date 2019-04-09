@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DbRepository
 {
@@ -25,18 +26,15 @@ namespace DbRepository
             return r;
         }
 
-        //public async Task<List<TemperaturesHumidities>> getTempHumidsByDeviceId(int deviceId)
-        //{
-        //    var r = await
-        //        _c
-        //            .TemperaturesHumidities
-                    
-        //            //.Where
-        //            //.Include(th => th.DeviceId == deviceId)
-        //            .ToListAsync();
-        //    return r;
-
-        //}
+        public async Task<List<TemperaturesHumidities>> getTempHumidsByDeviceId(int deviceId)
+        {
+            var r = await
+                _c
+                    .TemperaturesHumidities
+                    .Where(q => q.DeviceId == deviceId)
+                    .ToListAsync();
+            return r;
+        }
 
 
 
