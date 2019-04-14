@@ -1,0 +1,4 @@
+Microsoft.EntityFrameworkCore
+Microsoft.AspNetCore.App
+Giraffe
+TaskBuilder.fs

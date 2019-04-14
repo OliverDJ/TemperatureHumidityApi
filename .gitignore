@@ -1,0 +1,25 @@
+bin/
+obj/
+.vs/
+.fsproj.user
+
+.paket/.store/
+paket.exe
+.fake/
+.packages/
+paket-files/
+packages/
+
+
+
+#Fake output
+build/*
+preZip/*
+artifacts/*
+deploy/build/*
+deploy/preZip/*
+deploy/artifacts/*
+#Secrets
+
+deploySettings.json
+appsettings.json

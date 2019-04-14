@@ -7,8 +7,12 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Logging
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
-open TemperatureHumidityApi.HttpHandlers
-
+open TemperatureHumidityApi.DeviceHandler
+open TemperatureHumidityApi.TemperatureHumidityHandler
+open TemperatureHumidityApi.Moppers.DeviceMopper
+open TemperatureHumidityApi.TemperatureHumidityMopper
+open Microsoft.Extensions.Configuration
+open ConfigModel
 // ---------------------------------
 // Web app
 // ---------------------------------
@@ -18,7 +22,13 @@ let webApp =
         subRoute "/api"
             (choose [
                 GET >=> choose [
-                    route "/hello" >=> handleGetHello
+                    route "/devices" >=> getAllDevices
+                    routef "/deviceById/%i" getDeviceById 
+                    route "/temphumids" >=> getAllTempHumids
+                ]
+                POST >=> choose [
+                    route "/addDevice" >=> bindJson<NewDevice> addNewDevice
+                    route "/addTempHumid" >=> bindJson<NewTemperatureHumidity> addNewTempHumid
                 ]
             ])
         setStatusCode 404 >=> text "Not Found" ]
@@ -34,9 +44,19 @@ let errorHandler (ex : Exception) (logger : ILogger) =
 // ---------------------------------
 // Config and Main
 // ---------------------------------
+let getConfiguration (env:IHostingEnvironment) = 
+    let builder = 
+         ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            //.AddJsonFile("appsettings.json", true, true)
+            //.AddJsonFile(sprintf "appsettings.%s.json" env.EnvironmentName, true)
+            .AddEnvironmentVariables();
+
+    builder.Build();
+
 
 let configureCors (builder : CorsPolicyBuilder) =
-    builder.WithOrigins("http://localhost:8080")
+    builder.WithOrigins("http://localhost:8080", "*")
            .AllowAnyMethod()
            .AllowAnyHeader()
            |> ignore
@@ -47,12 +67,16 @@ let configureApp (app : IApplicationBuilder) =
     | true  -> app.UseDeveloperExceptionPage()
     | false -> app.UseGiraffeErrorHandler errorHandler)
         .UseHttpsRedirection()
-        .UseCors(configureCors)
+        //.UseCors(configureCors)
         .UseGiraffe(webApp)
 
 let configureServices (services : IServiceCollection) =
-    services.AddCors()    |> ignore
+    //services.AddCors()    |> ignore
+    let env = services.BuildServiceProvider().GetService<IHostingEnvironment>()
+    let iconfig = getConfiguration env
     services.AddGiraffe() |> ignore
+    let settings = iconfig.Get<WebApiSettings>()
+    services.AddSingleton<WebApiSettings>(fun _ -> iconfig.Get<WebApiSettings>() ) |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =
     builder.AddFilter(fun l -> l.Equals LogLevel.Error)
