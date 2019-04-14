@@ -26,11 +26,11 @@ open System.Threading.Tasks
                 return r
             }
         
+        //let dbSettings = Configuration.getConfigModel()
+        let createContext conn = conn |> Context.configureSqlServerContext
 
-        let con = @"Server=localhost; Database=TempHumid; User Id=sa; Password=pass123?;"
-        let ctx = con |> Context.configureSqlServerContext
-        let thsa = TemperatureHumidityServiceAccess ctx
-        let getAllTempHumidsAsync() = _getAllTempHumidsAsync thsa
-        let addNewTempHumidAsync = _addNewTempHumidAsync ctx
+        let thsa s = TemperatureHumidityServiceAccess (createContext s)
+        let getAllTempHumidsAsync s = _getAllTempHumidsAsync (thsa s)
+        let addNewTempHumidAsync s = _addNewTempHumidAsync (createContext s)
 
 

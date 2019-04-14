@@ -5,10 +5,6 @@ open Microsoft.EntityFrameworkCore
 open Microsoft.EntityFrameworkCore.Proxies
 open Microsoft.EntityFrameworkCore.SqlServer
 open DbRepository
-    //module Context =
-    //    open DbRepository
-    //    let ctx = new TemphumidContext()
-    //    ctx
     
     module Context = 
 

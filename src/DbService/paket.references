@@ -1,1 +1,5 @@
 TaskBuilder.fs
+Microsoft.Extensions.Configuration
+Microsoft.Extensions.Configuration.UserSecrets
+Microsoft.AspNetCore.StaticFiles
+Microsoft.AspNetCore

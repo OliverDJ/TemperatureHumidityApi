@@ -16,7 +16,10 @@ packages/
 build/*
 preZip/*
 artifacts/*
-
+deploy/build/*
+deploy/preZip/*
+deploy/artifacts/*
 #Secrets
 
 deploySettings.json
+appsettings.json

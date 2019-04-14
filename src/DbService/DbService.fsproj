@@ -4,6 +4,9 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Remove="DbConfig\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Context.fs" />
     <Compile Include="Moppers\TemperatureHumidityMopper.fs" />
     <Compile Include="Moppers\DeviceMopper.fs" />

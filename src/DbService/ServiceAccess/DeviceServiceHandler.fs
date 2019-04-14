@@ -31,12 +31,11 @@ open System.Threading.Tasks
                 return r
             }
         
-        let con = @"Server=localhost; Database=TempHumid; User Id=sa; Password=pass123?;"
-        let ctx = con|> configureSqlServerContext 
-        let dsa = DeviceServiceAccess ctx
-        let getDevicesAsync() = _getDevicesAsync dsa
-        let getDeviceByIdAsync = _tryGetDeviceByIdAsync dsa
-        let addNewDeviceAsync = _addNewDeviceAsync ctx
+        let createCtx s =  s |> configureSqlServerContext 
+        let dsa s = DeviceServiceAccess (createCtx s) 
+        let getDevicesAsync s = _getDevicesAsync (dsa s)
+        let getDeviceByIdAsync s = _tryGetDeviceByIdAsync (dsa s)
+        let addNewDeviceAsync s = _addNewDeviceAsync (createCtx s) 
           
 
             

@@ -11,7 +11,8 @@ open TemperatureHumidityApi.DeviceHandler
 open TemperatureHumidityApi.TemperatureHumidityHandler
 open TemperatureHumidityApi.Moppers.DeviceMopper
 open TemperatureHumidityApi.TemperatureHumidityMopper
-
+open Microsoft.Extensions.Configuration
+open ConfigModel
 // ---------------------------------
 // Web app
 // ---------------------------------
@@ -43,6 +44,16 @@ let errorHandler (ex : Exception) (logger : ILogger) =
 // ---------------------------------
 // Config and Main
 // ---------------------------------
+let getConfiguration (env:IHostingEnvironment) = 
+    let builder = 
+         ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            //.AddJsonFile("appsettings.json", true, true)
+            //.AddJsonFile(sprintf "appsettings.%s.json" env.EnvironmentName, true)
+            .AddEnvironmentVariables();
+
+    builder.Build();
+
 
 let configureCors (builder : CorsPolicyBuilder) =
     builder.WithOrigins("http://localhost:8080", "*")
@@ -61,7 +72,11 @@ let configureApp (app : IApplicationBuilder) =
 
 let configureServices (services : IServiceCollection) =
     //services.AddCors()    |> ignore
+    let env = services.BuildServiceProvider().GetService<IHostingEnvironment>()
+    let iconfig = getConfiguration env
     services.AddGiraffe() |> ignore
+    let settings = iconfig.Get<WebApiSettings>()
+    services.AddSingleton<WebApiSettings>(fun _ -> iconfig.Get<WebApiSettings>() ) |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =
     builder.AddFilter(fun l -> l.Equals LogLevel.Error)

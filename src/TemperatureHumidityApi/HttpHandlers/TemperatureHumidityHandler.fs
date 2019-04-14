@@ -3,7 +3,7 @@ open Giraffe
 open Microsoft.AspNetCore.Http
 open FSharp.Control.Tasks
 open DbService.TemperatureHumidityServiceHandler
-
+open DbHelper
 open TemperatureHumidityMopper
     module TemperatureHumidityHandler =
         
@@ -11,7 +11,8 @@ open TemperatureHumidityMopper
         let getAllTempHumids = 
             fun (next : HttpFunc) (context : HttpContext) -> 
                 task {
-                    let! q = getAllTempHumidsAsync()
+                    let! s = context |> getDbConnStringFromServices
+                    let! q = getAllTempHumidsAsync s
                     let dsth = q |> Seq.map mapDbServiceToApi |> Seq.toList
                     let r = dsth |> context.WriteJsonAsync
                     return! r
@@ -21,8 +22,9 @@ open TemperatureHumidityMopper
         let addNewTempHumid (nth : NewTemperatureHumidity) = 
             fun (next : HttpFunc) (context : HttpContext) ->
                 task {
+                    let! s = context |> getDbConnStringFromServices
                     let dsth = nth |> mapApiToDbService
-                    let! m = DbService.TemperatureHumidityServiceHandler.addNewTempHumidAsync dsth
+                    let! m = (addNewTempHumidAsync s) dsth 
                     let r = m |> context.WriteJsonAsync
                     return! r                
                 }
