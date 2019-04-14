@@ -23,3 +23,11 @@ deploy/artifacts/*
 
 deploySettings.json
 appsettings.json
+
+
+azure-resources/params/services.json
+azure-resources/params/environment.json
+environment.json
+service.json
+**/*environment.json
+**/*service.json
