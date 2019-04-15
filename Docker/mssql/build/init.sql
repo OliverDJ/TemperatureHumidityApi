@@ -135,5 +135,5 @@ GO
 
 /* Insert Into Table */
 
-Insert into [TempHumid].[dbo].[Devices] (Name, CreatedAt) 
+Insert into [dbo].[Devices] (Name, CreatedAt) 
 Values ('GrizzlyBear',CURRENT_TIMESTAMP);
