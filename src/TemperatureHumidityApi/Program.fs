@@ -77,6 +77,7 @@ let configureServices (services : IServiceCollection) =
     let env = services.BuildServiceProvider().GetService<IHostingEnvironment>()
     let iconfig = getConfiguration env
     services.AddGiraffe() |> ignore
+    services.AddCors() |> ignore
     let settings = iconfig.Get<WebApiSettings>()
     services.AddSingleton<WebApiSettings>(fun _ -> iconfig.Get<WebApiSettings>() ) |> ignore
 
